@@ -25,12 +25,7 @@ export default function Home() {
                         >
                             Browse Services
                         </Link>
-                        <button
-                            onClick={handleInquiryClick}
-                            className="bg-white hover:bg-gray-100 text-blue-900 font-semibold px-8 py-3 rounded-md transition duration-200"
-                        >
-                            Make an Inquiry
-                        </button>
+
                     </div>
                 </div>
             </section>
@@ -67,22 +62,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="bg-gray-100 py-16 px-6 text-center">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                        Have Questions or Need Assistance?
-                    </h2>
-                    <p className="text-gray-600 mb-8">
-                        Reach out to our team or submit an inquiry form for partnership, custom service requests, or technical support.
-                    </p>
-                    <button
-                        onClick={handleInquiryClick}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-md transition duration-200"
-                    >
-                        Open Inquiry Form
-                    </button>
-                </div>
-            </section>
+
         </div>
     );
 }

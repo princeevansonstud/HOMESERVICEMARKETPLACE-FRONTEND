@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Mock authentication check - update to connect with your AuthContext later
-    const isAuthenticated = false;
-
     const handleLogout = () => {
-        // TODO: Add your logout logic here
+        logout();
         navigate('/login');
     };
 
@@ -33,7 +32,7 @@ export default function Navbar() {
                             Browse Listings
                         </Link>
 
-                        {isAuthenticated ? (
+                        {user ? (
                             <>
                                 <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
                                     Dashboard
@@ -103,7 +102,7 @@ export default function Navbar() {
                         Browse Listings
                     </Link>
 
-                    {isAuthenticated ? (
+                    {user ? (
                         <>
                             <Link
                                 to="/dashboard"

@@ -13,8 +13,14 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      await login(email, password);
-      navigate('/');
+      const userData = await login(email, password);
+
+      // Redirect based on user role
+      if (userData?.role === 'admin' || email === 'admin@gmail.com') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }

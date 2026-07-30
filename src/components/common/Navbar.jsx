@@ -29,7 +29,8 @@ export default function Navbar() {
                             Home
                         </Link>
                         <Link to="/listings" className="text-gray-700 hover:text-blue-600 font-medium">
-                            Browse Listings
+                            Services
+
                         </Link>
 
                         {user ? (

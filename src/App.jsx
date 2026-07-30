@@ -8,6 +8,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import ProviderDashboard from './pages/ProviderDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import CreateListing from './pages/CreateListing';
+import ListingDetails from './pages/ListingDetails';
 
 export default function App() {
     return (
@@ -26,6 +28,9 @@ export default function App() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/dashboard" element={<ProviderDashboard />} />
                         <Route path="/admin" element={<AdminDashboard />} />
+                        <Route path="/dashboard/new-listing" element={<CreateListing />} />
+                        <Route path="/listings/:id" element={<ListingDetails />} />
+
                     </Routes>
                 </main>
             </div>

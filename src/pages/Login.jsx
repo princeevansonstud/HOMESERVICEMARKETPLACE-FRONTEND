@@ -13,11 +13,9 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      const userData = await login(email, password);
-
-      // Redirect based on user role
-      if (userData?.role === 'admin' || email === 'admin@gmail.com') {
-        navigate('/admin-dashboard');
+      const loggedInUser = await login(email, password);
+      if (loggedInUser.role === 'provider') {
+        navigate('/dashboard');
       } else {
         navigate('/');
       }

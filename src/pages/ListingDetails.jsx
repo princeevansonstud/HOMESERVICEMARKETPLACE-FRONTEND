@@ -1,46 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getListingById } from '../services/listingService';
 
 export default function ListingDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [listing, setListing] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [bookingStatus, setBookingStatus] = useState(false);
 
-    const listingsData = {
-        "1": { title: 'Professional House Cleaning', category: 'Cleaning', location: 'Ruiru', price: '2,500', description: 'Comprehensive deep cleaning services for your home in Ruiru and surrounding areas.' },
-        "2": { title: 'Expert Car Detailing & Polish', category: 'Automotive', location: 'Runda', price: '5,000', description: 'Full interior vacuuming, exterior ceramic polish, and washing services right at your location in Runda.' },
-        "3": { title: 'Jua Kali Metal Fabrication & Welding', category: 'Jua Kali', location: 'Kariobangi', price: '3,500', description: 'Custom metal gates, window grills, and heavy-duty structural repairs built by master artisans in Kariobangi.' }
-    };
-
-    const listing = listingsData[id] || {
-        title: 'Service Not Found',
-        category: 'N/A',
-        location: 'N/A',
-        price: '0',
-        description: 'The requested service listing does not exist.'
-    };
+    useEffect(() => {
+        getListingById(id)
+            .then(setListing)
+            .finally(() => setLoading(false));
+    }, [id]);
 
     const handleBookService = () => {
+        // TODO: once inquiryService is wired in here, this should call
+        // createInquiry({ listing_id: listing.id, message: '...' }) instead.
         setBookingStatus(true);
     };
+
+    if (loading) {
+        return <p className="p-8 text-center text-gray-500">Loading...</p>;
+    }
+
+    if (!listing) {
+        return (
+            <div className="p-8 max-w-4xl mx-auto">
+                <button onClick={() => navigate(-1)} className="text-blue-600 mb-6 hover:underline">
+                    &larr; Back to Listings
+                </button>
+                <p className="text-gray-600">This service listing does not exist.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="p-8 max-w-4xl mx-auto">
             <button onClick={() => navigate(-1)} className="text-blue-600 mb-6 hover:underline">
                 &larr; Back to Listings
             </button>
-
             <div className="bg-white border rounded-lg p-8 shadow-sm">
                 <span className="text-xs bg-blue-100 text-blue-800 font-semibold px-2.5 py-0.5 rounded">{listing.category}</span>
                 <h1 className="text-3xl font-bold text-gray-800 mt-3">{listing.title}</h1>
                 <p className="text-lg text-gray-600 mt-2">Location: {listing.location}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-4">KES {listing.price}</p>
-
+                <p className="text-2xl font-bold text-gray-900 mt-4">{listing.price_range}</p>
+                {listing.availability && (
+                    <p className="text-sm text-gray-500 mt-1">Availability: {listing.availability}</p>
+                )}
                 <hr className="my-6" />
-
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Description</h3>
                 <p className="text-gray-700 leading-relaxed">{listing.description}</p>
-
                 {bookingStatus ? (
                     <div className="mt-8 p-4 bg-green-100 text-green-800 rounded-md">
                         Service booked successfully! The provider will contact you shortly.

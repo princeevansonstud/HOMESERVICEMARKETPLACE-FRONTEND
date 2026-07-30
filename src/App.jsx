@@ -10,7 +10,7 @@ import Profile from './pages/Profile';
 import ProviderDashboard from './pages/ProviderDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import CreateListing from './pages/CreateListing';
-import ListingDetails from './pages/ListingDetails';
+
 
 export default function App() {
     return (

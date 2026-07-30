@@ -14,8 +14,6 @@ export default function BrowseListings() {
             .finally(() => setLoading(false));
     }, []);
 
-    // Categories are derived from whatever listings actually exist,
-    // so this stays correct no matter what categories providers use.
     const categories = ['All', ...new Set(listings.map((l) => l.category).filter(Boolean))];
 
     const filteredListings = listings.filter((item) => {
@@ -62,7 +60,7 @@ export default function BrowseListings() {
                                     <span className="text-xs bg-blue-100 text-blue-800 font-semibold px-2.5 py-0.5 rounded">{listing.category}</span>
                                     <h3 className="text-xl font-bold text-gray-800 mt-2">{listing.title}</h3>
                                     <p className="text-gray-600 mt-1">Location: {listing.location}</p>
-                                    <p className="text-lg font-semibold text-gray-900 mt-4">{listing.price_range}</p>
+                                    <p className="text-lg font-semibold text-gray-900 mt-4">KES {listing.price_range || listing.price}</p>
                                 </div>
                                 <Link
                                     to={`/listings/${listing.id}`}

@@ -51,7 +51,12 @@ export default function ListingDetails() {
                     </div>
                 ) : (
                     <div className="flex flex-col md:flex-row gap-4 mt-8">
-
+                        <button
+                            onClick={handleBookService}
+                            className="flex-1 bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 font-medium text-lg"
+                        >
+                            Book This Service
+                        </button>
                         <button
                             onClick={handleInquiryClick}
                             className="flex-1 bg-gray-800 text-white py-3 rounded-md hover:bg-gray-900 font-medium text-lg"

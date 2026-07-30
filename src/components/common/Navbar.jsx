@@ -39,7 +39,7 @@ export default function Navbar() {
                                     Dashboard
                                 </Link>
                                 <Link to="/profile" className="text-gray-700 hover:text-blue-600 font-medium">
-                                    Profile
+                                    myInquires
                                 </Link>
                                 <button
                                     onClick={handleLogout}

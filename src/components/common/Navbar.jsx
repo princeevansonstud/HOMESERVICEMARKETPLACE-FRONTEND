@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Mock authentication check - update to connect with your AuthContext later
-    const isAuthenticated = false;
-
     const handleLogout = () => {
-        // TODO: Add your logout logic here
+        logout();
         navigate('/login');
     };
 
@@ -30,13 +29,19 @@ export default function Navbar() {
                             Home
                         </Link>
                         <Link to="/listings" className="text-gray-700 hover:text-blue-600 font-medium">
-                            Browse Listings
+                            Services
+
                         </Link>
 
-                        {isAuthenticated ? (
+                        {user ? (
                             <>
-                                <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
-                                    Dashboard
+                                {user.role === 'provider' && (
+                                    <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
+                                        Dashboard
+                                    </Link>
+                                )}
+                                <Link to={user.role === 'provider' ? '/provider/inbox' : '/my-inquiries'} className="text-gray-700 hover:text-blue-600 font-medium">
+                                    {user.role === 'provider' ? 'Inbox' : 'My Inquiries'}
                                 </Link>
                                 <Link to="/profile" className="text-gray-700 hover:text-blue-600 font-medium">
                                     Profile
@@ -103,14 +108,23 @@ export default function Navbar() {
                         Browse Listings
                     </Link>
 
-                    {isAuthenticated ? (
+                    {user ? (
                         <>
+                            {user.role === 'provider' && (
+                                <Link
+                                    to="/dashboard"
+                                    onClick={() => setIsOpen(false)}
+                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                                >
+                                    Dashboard
+                                </Link>
+                            )}
                             <Link
-                                to="/dashboard"
+                                to={user.role === 'provider' ? '/provider/inbox' : '/my-inquiries'}
                                 onClick={() => setIsOpen(false)}
                                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
                             >
-                                Dashboard
+                                {user.role === 'provider' ? 'Inbox' : 'My Inquiries'}
                             </Link>
                             <Link
                                 to="/profile"

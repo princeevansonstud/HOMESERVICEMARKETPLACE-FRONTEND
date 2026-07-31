@@ -15,9 +15,8 @@ export default function Login() {
     setError('');
     try {
       const loggedInUser = await login(email, password);
-      const destination = location.state?.from;
-      if (destination) {
-        navigate(destination, { replace: true });
+      if (loggedInUser.role === 'admin') {
+        navigate('/admin');
       } else if (loggedInUser.role === 'provider') {
         navigate('/dashboard');
       } else {

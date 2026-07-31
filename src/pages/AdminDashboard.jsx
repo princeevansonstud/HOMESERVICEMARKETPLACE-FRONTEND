@@ -18,7 +18,7 @@ export default function AdminDashboard() {
             const usersRes = await axios.get('http://127.0.0.1:5000/api/admin/users', { headers });
             setUsers(usersRes.data);
 
-            const listingsRes = await axios.get('http://127.0.0.1:5000/api/listings', { headers });
+            const listingsRes = await axios.get('http://127.0.0.1:5000/api/admin/listings', { headers });
             setListings(listingsRes.data);
         } catch (err) {
             console.error('Failed to fetch admin data', err);
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
     const deleteListing = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://127.0.0.1:5000/api/listings/${id}`, {
+            await axios.delete(`http://127.0.0.1:5000/api/admin/listings/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setListings(listings.filter(listing => listing.id !== id));
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
                     onClick={() => setActiveTab('listings')}
                     className={`px-4 py-2 font-medium rounded-md ${activeTab === 'listings' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
                 >
-                    Manage Listings
+                    Manage services
                 </button>
             </div>
 
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price (KES)</th>
                                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
                                 listings.map((listing) => (
                                     <tr key={listing.id}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{listing.title}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{listing.location}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{listing.description}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">KES {listing.price}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <button onClick={() => deleteListing(listing.id)} className="text-red-600 hover:text-red-900">Delete</button>
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">No listings found.</td>
+                                    <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">No services found.</td>
                                 </tr>
                             )}
                         </tbody>

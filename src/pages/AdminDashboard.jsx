@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 export default function AdminDashboard() {
     const [users, setUsers] = useState([]);
@@ -15,10 +15,10 @@ export default function AdminDashboard() {
             const token = localStorage.getItem('token');
             const headers = { Authorization: `Bearer ${token}` };
 
-            const usersRes = await axios.get('http://127.0.0.1:5000/api/admin/users', { headers });
+            const usersRes = await api.get('/admin/users', { headers });
             setUsers(usersRes.data);
 
-            const listingsRes = await axios.get('http://127.0.0.1:5000/api/admin/listings', { headers });
+            const listingsRes = await api.get('/admin/listings', { headers });
             setListings(listingsRes.data);
         } catch (err) {
             console.error('Failed to fetch admin data', err);
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
     const deleteUser = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://127.0.0.1:5000/api/admin/users/${id}`, {
+            await api.delete(`/admin/users/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(users.filter(user => user.id !== id));
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
     const deleteListing = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://127.0.0.1:5000/api/admin/listings/${id}`, {
+            await api.delete(`/admin/listings/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setListings(listings.filter(listing => listing.id !== id));
